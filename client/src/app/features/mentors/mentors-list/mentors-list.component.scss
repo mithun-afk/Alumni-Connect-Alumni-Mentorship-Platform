@@ -1,0 +1,93 @@
+.mentors-container {
+  padding: 24px;
+}
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+}
+.mentors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+.mentor-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 { margin: 0; color: #001f3f; /* navy */ }
+  }
+  .meta { color: #666; font-size: 14px; }
+  .bio { margin: 16px 0; font-size: 14px; }
+  .badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #f0f0f0;
+    &.text-green { color: #2e7d32; }
+    &.text-amber { color: #f57f17; }
+    &.text-gray { color: #616161; }
+  }
+}
+.btn-primary {
+  background: #008080; /* teal */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  &:hover { background: #006666; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+.btn-secondary {
+  background: transparent;
+  color: #001f3f;
+  border: 1px solid #001f3f;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modal-backdrop {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+}
+.modal {
+  background: white;
+  padding: 24px;
+  border-radius: 6px;
+  width: 400px;
+  max-width: 90%;
+  textarea {
+    width: 100%;
+    margin: 16px 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+}
+.state-message {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+}

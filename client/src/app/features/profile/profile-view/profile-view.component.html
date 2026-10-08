@@ -1,0 +1,98 @@
+<div class="container py-4">
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p class="mt-3">Loading profile...</p>
+  </div>
+
+  <div *ngIf="!isLoading && !profileData" class="empty-state card">
+    <lucide-icon name="user" size="48" class="mb-3 text-muted"></lucide-icon>
+    <h3>Profile Not Found</h3>
+    <p>The profile you are looking for does not exist or is private.</p>
+    <a routerLink="/dashboard" class="btn btn-primary mt-3">Back to Dashboard</a>
+  </div>
+
+  <div *ngIf="!isLoading && profileData">
+    <!-- Header Card -->
+    <div class="card profile-header-card mb-4">
+      <div class="header-content">
+        <div class="avatar-large">
+          {{ profileData.user.firstName.charAt(0) }}{{ profileData.user.lastName.charAt(0) }}
+        </div>
+        <div class="user-info">
+          <h1>{{ profileData.user.firstName }} {{ profileData.user.lastName }}</h1>
+          <p class="headline">{{ profileData.headline || profileData.user.role | titlecase }}</p>
+          <div class="meta-info">
+            <span class="badge badge-info">{{ profileData.user.role | uppercase }}</span>
+            <span *ngIf="profileData.user.department"><lucide-icon name="book-open" size="14"></lucide-icon> {{ profileData.user.department }}</span>
+            <span *ngIf="profileData.user.batch"><lucide-icon name="calendar" size="14"></lucide-icon> Batch {{ profileData.user.batch }}</span>
+            <span *ngIf="profileData.location"><lucide-icon name="map-pin" size="14"></lucide-icon> {{ profileData.location }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions" *ngIf="isOwnProfile">
+        <a routerLink="/profile/edit" class="btn btn-secondary">
+          <lucide-icon name="edit" size="16"></lucide-icon> Edit Profile
+        </a>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <!-- Main Content -->
+      <div class="main-column">
+        <div class="card section-card" *ngIf="profileData.bio">
+          <h3>About</h3>
+          <p class="bio-text">{{ profileData.bio }}</p>
+        </div>
+
+        <div class="card section-card" *ngIf="profileData.currentCompany || profileData.experience">
+          <h3>Experience</h3>
+          <div class="experience-item">
+            <div class="exp-icon"><lucide-icon name="briefcase"></lucide-icon></div>
+            <div class="exp-details">
+              <h4>{{ profileData.currentRole || 'Professional' }}</h4>
+              <p class="company">{{ profileData.currentCompany || 'Independent' }}</p>
+              <p class="duration" *ngIf="profileData.experience">{{ profileData.experience }} years of experience</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section-card">
+          <h3>Skills</h3>
+          <div class="tags-list" *ngIf="profileData.skills?.length; else noSkills">
+            <span class="badge badge-surface" *ngFor="let skill of profileData.skills">{{ skill }}</span>
+          </div>
+          <ng-template #noSkills><p class="text-muted">No skills added yet.</p></ng-template>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="side-column">
+        <div class="card section-card">
+          <h3>Contact & Links</h3>
+          <div class="links-list">
+            <a [href]="profileData.linkedinUrl" target="_blank" class="link-item" *ngIf="profileData.linkedinUrl">
+              <lucide-icon name="linkedin" size="18"></lucide-icon> LinkedIn Profile
+            </a>
+            <a [href]="profileData.githubUrl" target="_blank" class="link-item" *ngIf="profileData.githubUrl">
+              <lucide-icon name="github" size="18"></lucide-icon> GitHub Profile
+            </a>
+            <a [href]="profileData.portfolioUrl" target="_blank" class="link-item" *ngIf="profileData.portfolioUrl">
+              <lucide-icon name="globe" size="18"></lucide-icon> Portfolio Website
+            </a>
+            <div class="link-item" *ngIf="!profileData.linkedinUrl && !profileData.githubUrl && !profileData.portfolioUrl">
+              <span class="text-muted">No links provided.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card section-card">
+          <h3>Domains</h3>
+          <div class="tags-list" *ngIf="profileData.domains?.length; else noDomains">
+            <span class="badge badge-surface" *ngFor="let domain of profileData.domains">{{ domain }}</span>
+          </div>
+          <ng-template #noDomains><p class="text-muted">No domains added.</p></ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

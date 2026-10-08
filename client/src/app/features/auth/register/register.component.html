@@ -1,0 +1,85 @@
+<div class="auth-container">
+  <div class="auth-card card">
+    <div class="auth-header">
+      <h1 class="brand-title">Alumni Network</h1>
+      <h2>Create Account</h2>
+      <p>Join the network to connect and grow.</p>
+    </div>
+
+    <div class="role-selector">
+      <button [class.active]="role === 'student'" (click)="setRole('student')">Student</button>
+      <button [class.active]="role === 'alumni'" (click)="setRole('alumni')">Alumni</button>
+    </div>
+
+    <div *ngIf="role === 'alumni'" class="alert alert-info">
+      Note: Alumni accounts require admin verification before full access is granted.
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group half">
+          <label>First Name</label>
+          <input formControlName="firstName" placeholder="First Name">
+        </div>
+        <div class="form-group half">
+          <label>Last Name</label>
+          <input formControlName="lastName" placeholder="Last Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" placeholder="Your college or personal email">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Department</label>
+          <select formControlName="department">
+            <option value="">Select Department</option>
+            <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+        <div class="form-group half">
+          <label>Batch</label>
+          <select formControlName="batch">
+            <option value="">Select Year</option>
+            <option *ngFor="let b of batches" [value]="b">{{ b }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="role === 'alumni'">
+        <label>Roll Number</label>
+        <input formControlName="rollNo" placeholder="College Roll Number (for verification)">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label>Password</label>
+          <input type="password" formControlName="password" placeholder="Min 6 characters">
+        </div>
+        <div class="form-group half">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+          <div class="error-text" *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch')">
+            Passwords do not match.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Create Account</span>
+        <div *ngIf="isLoading" class="spinner spinner-sm"></div>
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/auth/login">Sign In</a></p>
+    </div>
+  </div>
+</div>

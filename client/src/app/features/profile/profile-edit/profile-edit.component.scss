@@ -1,0 +1,93 @@
+@import '../../../../styles.scss';
+
+.py-4 { padding-top: $grid * 4; padding-bottom: $grid * 4; }
+.mb-0 { margin-bottom: 0 !important; }
+.mt-3 { margin-top: $grid * 3; }
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $grid * 4;
+}
+
+.section-card {
+  margin-bottom: $grid * 3;
+  
+  h3 {
+    font-size: 1.125rem;
+    color: $navy;
+    margin-bottom: $grid * 2;
+    padding-bottom: $grid;
+    border-bottom: 1px solid $border;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: $grid * 2;
+  margin-bottom: $grid * 2;
+  
+  .half { flex: 1; margin-bottom: 0; }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: $grid * 2;
+  }
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $grid;
+  padding: $grid;
+  border: 1px solid $border;
+  border-radius: $radius;
+  background: $white;
+  min-height: 44px;
+
+  .tag {
+    display: flex;
+    align-items: center;
+    gap: $grid * 0.5;
+    background: $surface;
+    padding: 4px $grid;
+    border-radius: $radius;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: $navy;
+
+    button {
+      background: none; border: none;
+      color: $text; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2px;
+      &:hover { color: $error; }
+    }
+  }
+
+  .tag-input {
+    border: none;
+    background: transparent;
+    padding: 4px;
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: 150px;
+    outline: none;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: $grid * 3;
+}
+
+.spinner-sm {
+  width: 20px; height: 20px; border-width: 2px; border-top-color: $white;
+}
+
+.alert {
+  padding: $grid * 1.5; border-radius: $radius; margin-bottom: $grid * 3; font-size: 0.875rem;
+  &-success { background: lighten($success, 45%); color: $success; border: 1px solid lighten($success, 30%); }
+  &-error { background: lighten($error, 40%); color: $error; border: 1px solid lighten($error, 20%); }
+}

@@ -1,0 +1,30 @@
+.journey-container { padding: 24px; font-family: 'Inter', sans-serif; }
+.header-section {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+  h2 { margin: 0; color: #001f3f; } p { color: #666; margin: 4px 0 0; }
+}
+.content-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+@media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+.card { background: white; padding: 16px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; h3 { margin-top: 0; color: #001f3f; } }
+.goals-card ul { padding-left: 20px; color: #444; }
+.progress-bar { background: #e0e0e0; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+.fill { background: #008080; height: 100%; transition: width 0.3s ease; }
+.progress-text { font-size: 12px; color: #666; margin-bottom: 16px; }
+.milestone-item { margin-bottom: 8px; label { display: flex; align-items: center; gap: 8px; cursor: pointer; } .completed { text-decoration: line-through; color: #888; } }
+.session-item {
+  border-bottom: 1px solid #eee; padding-bottom: 16px; margin-bottom: 16px;
+  &:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .session-header { display: flex; justify-content: space-between; align-items: center; h4 { margin: 0; color: #001f3f; } }
+  .status {
+    padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold;
+    &.upcoming { background: #e3f2fd; color: #1565c0; }
+    &.completed { background: #e8f5e9; color: #2e7d32; }
+    &.cancelled { background: #ffebee; color: #c62828; }
+  }
+  .time { font-size: 12px; color: #666; margin: 4px 0 12px; }
+  .notes-section { label { font-size: 12px; color: #666; display: block; margin-bottom: 4px; } textarea { width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 12px; } }
+}
+.btn-primary { background: #008080; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: inherit; &:hover { background: #006666; } &:disabled { opacity: 0.5; cursor: not-allowed; } }
+.btn-secondary { background: white; color: #001f3f; border: 1px solid #001f3f; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+.modal-backdrop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 100; }
+.modal { background: white; padding: 24px; border-radius: 6px; width: 450px; max-width: 90%; .slots-list { margin: 16px 0; max-height: 300px; overflow-y: auto; } .slot-item { margin-bottom: 8px; label { cursor: pointer; display: flex; gap: 8px; align-items: center; } } .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; } }

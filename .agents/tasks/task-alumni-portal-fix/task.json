@@ -1,0 +1,7 @@
+{
+  "task_id": "task-alumni-portal-fix",
+  "task_description": "Fix a MEAN stack Alumni Portal from prototype to deployable product. Critical bugs: mentorship/mentor routes missing authenticate middleware (req.user always undefined); Notification.create missing title field; Mentorship.create missing request field; User model has firstName/lastName but controllers populate 'name'; dashboard response shape mismatch; frontend status case mismatch (PENDING vs pending); auth guard race condition on refresh. Plus build missing Events, Opportunities, Messages UI components.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

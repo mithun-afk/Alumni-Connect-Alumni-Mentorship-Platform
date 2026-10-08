@@ -1,0 +1,61 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h1>Welcome back{{ (user$ | async)?.firstName ? ', ' + (user$ | async)?.firstName : '' }}!</h1>
+      <p class="subtitle">Here's what's happening on the platform.</p>
+    </div>
+    <div class="alumni-badge" *ngIf="isContributor">
+      <lucide-icon name="award" class="badge-icon"></lucide-icon>
+      Contributor (Impact Score: {{ stats?.alumniImpactScore }})
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="state-message">Loading dashboard...</div>
+
+  <div *ngIf="!loading && !stats" class="state-message">
+    Unable to load dashboard data. Please refresh the page.
+  </div>
+
+  <div class="stats-grid" *ngIf="!loading && stats">
+    <div class="stat-card">
+      <lucide-icon name="users" class="stat-icon"></lucide-icon>
+      <div class="stat-content">
+        <h3>Total Alumni</h3>
+        <p>{{ stats.totalAlumni }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <lucide-icon name="trending-up" class="stat-icon"></lucide-icon>
+      <div class="stat-content">
+        <h3>Active Mentorships</h3>
+        <p>{{ stats.activeMentorships }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <lucide-icon name="calendar" class="stat-icon"></lucide-icon>
+      <div class="stat-content">
+        <h3>Upcoming Events</h3>
+        <p>{{ stats.upcomingEvents }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <lucide-icon name="briefcase" class="stat-icon"></lucide-icon>
+      <div class="stat-content">
+        <h3>Open Opportunities</h3>
+        <p>{{ stats.openOpportunities }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section" *ngIf="!loading && chartData.length > 0">
+    <h2>Activity Overview</h2>
+    <div class="bar-chart">
+      <div class="bar-container" *ngFor="let item of chartData">
+        <div class="bar" [style.height.%]="item.value">
+          <span class="bar-value">{{ item.value }}</span>
+        </div>
+        <span class="bar-label">{{ item.label }}</span>
+      </div>
+    </div>
+  </div>
+</div>

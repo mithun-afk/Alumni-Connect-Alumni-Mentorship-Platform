@@ -1,0 +1,86 @@
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Loading journey...</p>
+</div>
+
+<div class="journey-container" *ngIf="!loading && mentorship">
+  <div class="header-section card">
+    <div>
+      <h2>Mentorship Journey</h2>
+      <p>Mentor: <strong>{{ mentorship.mentor?.firstName }} {{ mentorship.mentor?.lastName }}</strong>
+         &nbsp;|&nbsp; Student: <strong>{{ mentorship.student?.firstName }} {{ mentorship.student?.lastName }}</strong>
+      </p>
+    </div>
+    <button class="btn btn-primary" (click)="openBookingModal()">Book Session</button>
+  </div>
+
+  <div class="content-grid">
+    <div class="left-col">
+      <div class="card goals-card">
+        <h3>Goals</h3>
+        <p *ngIf="!mentorship.goals?.length" style="color:#5B6475">No goals set yet.</p>
+        <ul>
+          <li *ngFor="let goal of mentorship.goals">{{ goal }}</li>
+        </ul>
+      </div>
+
+      <div class="card milestones-card">
+        <h3>Milestones</h3>
+        <div class="progress-bar">
+          <div class="fill" [style.width.%]="progress"></div>
+        </div>
+        <p class="progress-text">{{ progress }}% Completed</p>
+        <p *ngIf="!milestones?.length" style="color:#5B6475;font-size:.875rem">No milestones yet.</p>
+        <div class="milestone-item" *ngFor="let m of milestones">
+          <label>
+            <input type="checkbox" [checked]="m.isCompleted" (change)="toggleMilestone(m)">
+            <span [class.completed]="m.isCompleted">{{ m.title }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="card sessions-card">
+        <h3>Session Log</h3>
+        <p *ngIf="!sessions?.length" style="color:#5B6475;font-size:.875rem">No sessions booked yet. Click "Book Session" to schedule one.</p>
+        <div class="session-item" *ngFor="let s of sessions">
+          <div class="session-header">
+            <h4>Session</h4>
+            <span class="badge"
+              [class.badge-info]="s.status==='scheduled'"
+              [class.badge-success]="s.status==='completed'"
+              [class.badge-error]="s.status==='cancelled'">{{ s.status | titlecase }}</span>
+          </div>
+          <p class="time">{{ s.scheduledAt | date:'medium' }}</p>
+          <div class="notes-section">
+            <label>Notes:</label>
+            <textarea [(ngModel)]="s.notes" (blur)="updateNotes(s, s.notes || '')" rows="2" placeholder="Add notes here..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBookingModal">
+  <div class="modal card">
+    <h3>Book a Session</h3>
+    <div class="slots-list" *ngIf="availableSlots.length > 0; else noSlots">
+      <div class="slot-item" *ngFor="let slot of availableSlots">
+        <label>
+          <input type="radio" name="slot" [value]="slot._id" [(ngModel)]="selectedSlotId">
+          {{ slot.date | date:'mediumDate' }} ({{ slot.startTime }} – {{ slot.endTime }})
+          <span *ngIf="slot.topic"> · {{ slot.topic }}</span>
+        </label>
+      </div>
+    </div>
+    <ng-template #noSlots>
+      <p style="color:#5B6475">No available slots. Ask your mentor to add office hours.</p>
+    </ng-template>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="bookSession()" [disabled]="!selectedSlotId">Book</button>
+    </div>
+  </div>
+</div>

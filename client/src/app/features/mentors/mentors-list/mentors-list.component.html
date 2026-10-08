@@ -1,0 +1,48 @@
+<div class="mentors-container">
+  <div class="filters">
+    <input type="text" [(ngModel)]="filters.department" placeholder="Department" (input)="applyFilters()">
+    <input type="text" [(ngModel)]="filters.domain" placeholder="Domain" (input)="applyFilters()">
+    <input type="text" [(ngModel)]="filters.company" placeholder="Company" (input)="applyFilters()">
+    <input type="text" [(ngModel)]="filters.batch" placeholder="Batch" (input)="applyFilters()">
+  </div>
+
+  <div *ngIf="loading" class="state-message">Loading mentors...</div>
+  
+  <div *ngIf="!loading && filteredMentors.length === 0" class="state-message">No mentors found.</div>
+
+  <div class="mentors-grid" *ngIf="!loading">
+    <div class="mentor-card" *ngFor="let mentor of filteredMentors">
+      <div class="card-header">
+        <h3>{{ mentor.name }}</h3>
+        <span *ngIf="mentor.matchScore" 
+              class="badge" 
+              [ngClass]="getScoreColor(mentor.matchScore)"
+              title="Smart Match Score">
+          {{ mentor.matchScore }}% Match
+        </span>
+      </div>
+      <p><strong>{{ mentor.jobTitle }}</strong> at {{ mentor.company }}</p>
+      <p class="meta">{{ mentor.department }} | Batch {{ mentor.batch }}</p>
+      <p class="bio">{{ mentor.bio }}</p>
+      <button class="btn-primary" (click)="openRequestModal(mentor)">Request Mentorship</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal">
+    <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center;">
+      <h3>Request Mentorship with {{ selectedMentor?.name }}</h3>
+      <button class="btn-close" (click)="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+    </div>
+    <textarea [(ngModel)]="requestMessage" placeholder="Why do you want this mentor?" rows="4"></textarea>
+    <div class="error-message" *ngIf="submitError" style="color: red; margin-top: 10px;">{{ submitError }}</div>
+    <div class="success-message" *ngIf="submitSuccess" style="color: green; margin-top: 10px;">{{ submitSuccess }}</div>
+    <div class="modal-actions">
+      <button class="btn-secondary" (click)="closeModal()" [disabled]="submitting">Cancel</button>
+      <button class="btn-primary" (click)="submitRequest()" [disabled]="!requestMessage.trim() || submitting">
+        {{ submitting ? 'Sending...' : 'Send Request' }}
+      </button>
+    </div>
+  </div>
+</div>

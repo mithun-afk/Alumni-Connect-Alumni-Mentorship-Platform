@@ -1,0 +1,9 @@
+.office-hours-container { padding: 24px; font-family: 'Inter', sans-serif; h2 { color: #001f3f; margin-top: 0; margin-bottom: 24px; } }
+.card { background: white; padding: 20px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; h3 { margin-top: 0; color: #001f3f; } }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; label { font-size: 14px; font-weight: 500; color: #444; } input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; } }
+.full-width { grid-column: 1 / -1; }
+.actions { display: flex; justify-content: flex-end; }
+.btn-primary { background: #008080; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 500; }
+.slot-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; &:last-child { border-bottom: none; } .info { display: flex; gap: 16px; align-items: center; color: #444; .topic { color: #666; font-style: italic; } } .status { font-size: 12px; font-weight: bold; padding: 4px 8px; border-radius: 12px; &.booked { background: #ffebee; color: #c62828; } &.available { background: #e8f5e9; color: #2e7d32; } } }
+.empty-state { color: #666; font-style: italic; }

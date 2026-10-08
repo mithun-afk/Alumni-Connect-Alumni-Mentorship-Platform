@@ -1,0 +1,34 @@
+{
+  "id": "FEAT-002",
+  "type": "fix",
+  "description": "Fix all Angular client-side bugs: auth guard race condition on hard refresh; AuthService.getMe() response shape mismatch storing {user,profile} instead of User; mentorship requests status case mismatch ('PENDING' vs 'pending') hiding Accept/Decline buttons; mentors-list using selectedMentor.id instead of selectedMentor.userId for the request; dashboard hardcoded fallback stats and chartData; notification service response shape mismatch; mentorship-list missing error handling. Depends on FEAT-001 being complete (server must return correct shapes). Independent of FEAT-003.",
+  "status": "pending",
+  "steps": [
+    "Fix client/src/app/core/guards/auth.guard.ts: change `if (authService.isLoggedIn())` to `if (authService.getToken())`. The isLoggedIn() check requires currentUserValue which is null until getMe() resolves asynchronously — causes redirect to login on hard refresh. Token-only check is safe because getMe() failure triggers logout().",
+    "Fix client/src/app/core/services/auth.service.ts getMe() method: change response type from Observable<{success: boolean, data: User}> to Observable<any>. Change tap callback to: if (response.success && response.data?.user) { this.currentUserSubject.next(response.data.user); }. The backend returns {success, data: {user, profile}} but service was treating data as User directly.",
+    "Fix client/src/app/core/models/mentorship.model.ts Mentor interface: add userId: string field (for user._id, used as mentorId in mentorship requests). Keep id: string (profile _id).",
+    "Fix client/src/app/features/mentors/mentors-list/mentors-list.component.ts: change `this.mentorshipService.requestMentorship(this.selectedMentor.id, ...)` to `this.mentorshipService.requestMentorship(this.selectedMentor.userId, ...)`. Move `this.submitting = false` from complete callback into both next and error callbacks (complete fires after error in Angular HttpClient, so submitting would reset even on error).",
+    "Fix client/src/app/features/mentorship/requests/requests.component.ts: add `errorMessage = ''` and `updatingId: string | null = null` properties. Update loadRequests() to use subscribe({next, error}) pattern — on error set errorMessage and loading=false. Update updateStatus() to set/clear updatingId. Fix filtering: displayedRequests uses r.mentorId and r.studentId which the backend now returns — verify these match (they do after FEAT-001 fix).",
+    "Fix client/src/app/features/mentorship/requests/requests.component.html: change req.status === 'PENDING' to req.status === 'pending' (backend uses lowercase). Change status badge ngClass to use req.status directly (lowercase) and display with titlecase pipe. Add *ngIf error message display. Add [disabled]=\"updatingId === req._id\" and loading text on Accept/Decline buttons.",
+    "Fix client/src/app/features/mentorship/list/mentorship-list.component.ts: add error = false property. Change subscribe to use next/error pattern. Add empty state and error state to mentorship-list.component.html.",
+    "Fix client/src/app/features/dashboard/dashboard/dashboard.component.ts: add loading = true property, set to false after API call. Remove hardcoded fallback stats in error handler (set this.stats = null and this.loading = false instead). Use API chartData: this.chartData = res.data.chartData?.data || []. Update DashboardStats interface to include optional chartData. Add `loading` to template (show spinner while loading, empty state when stats is null after error).",
+    "Fix client/src/app/core/services/notification.service.ts: update getNotifications() return type to Observable<any> and update response handling to extract res.data?.notifications || []. Fix getUnreadCount() tap to read res.data?.count instead of res.count (backend returns {success, data: {count}})."
+  ],
+  "acceptance_criteria": [
+    "Hard-refresh /dashboard while logged in — user stays on dashboard, not redirected to login",
+    "authService.currentUserValue?.firstName returns the user's actual first name (not undefined)",
+    "Navigate to /mentorship/requests as alumni/mentor with a pending request — Accept and Decline buttons are visible on the card",
+    "Click Accept or Decline — button shows loading state, request list refreshes after action",
+    "Navigate to /mentors as student, click Request Mentorship, enter message, click Send Request — request is created (201 from server), not a 400 'invalid mentorId' error",
+    "Navigate to /mentorship — shows empty state message when no active mentorships, not infinite loading spinner",
+    "Navigate to /dashboard — stats show real numbers from DB (0 is acceptable), NOT hardcoded 120/34",
+    "Notification bell unread count updates from DB on login"
+  ],
+  "verification": [
+    "cd 'e:\\da\\Alumini proj\\client' && npm run build -- 0 compile errors",
+    "cd 'e:\\da\\Alumini proj\\client' && npm start -- app starts on :4200",
+    "Manual: register student + alumni accounts, test Request Mentorship flow end-to-end per plan.md item 19 steps 1-7"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

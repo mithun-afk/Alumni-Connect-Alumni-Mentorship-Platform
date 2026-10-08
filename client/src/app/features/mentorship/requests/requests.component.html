@@ -1,0 +1,54 @@
+<div class="page">
+  <h1 class="page-title">Mentorship Requests</h1>
+
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading requests...</p>
+  </div>
+
+  <div class="error-state" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && !error && requests.length === 0">
+    <p>No mentorship requests yet.</p>
+    <p *ngIf="userRole === 'student'">Browse <a routerLink="/mentors">Find Mentors</a> to send your first request.</p>
+  </div>
+
+  <div class="requests-list" *ngIf="!loading && requests.length > 0">
+    <div class="card request-card" *ngFor="let req of requests">
+      <div class="request-header">
+        <div class="person-info">
+          <div class="avatar">{{ getPersonName(req).charAt(0).toUpperCase() }}</div>
+          <div>
+            <h3>{{ getPersonName(req) }}</h3>
+            <p class="dept">{{ getPersonDept(req) }}</p>
+          </div>
+        </div>
+        <span class="badge"
+          [class.badge-warning]="req.status === 'pending'"
+          [class.badge-success]="req.status === 'accepted'"
+          [class.badge-error]="req.status === 'declined'">
+          {{ req.status | titlecase }}
+        </span>
+      </div>
+
+      <div class="match-score" *ngIf="req.matchScore">
+        Match Score: <strong>{{ req.matchScore | number:'1.0-0' }}%</strong>
+      </div>
+
+      <p class="request-message">"{{ req.message }}"</p>
+
+      <p class="request-date">{{ req.createdAt | date:'mediumDate' }}</p>
+
+      <div class="request-actions" *ngIf="req.type === 'received' && req.status === 'pending'">
+        <button class="btn btn-primary" (click)="accept(req._id)">Accept</button>
+        <button class="btn btn-secondary" (click)="decline(req._id)">Decline</button>
+      </div>
+
+      <div *ngIf="req.status === 'accepted'" style="margin-top: 8px">
+        <a [routerLink]="['/mentorship']" class="btn btn-secondary">View Mentorship →</a>
+      </div>
+    </div>
+  </div>
+</div>

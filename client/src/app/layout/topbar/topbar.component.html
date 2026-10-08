@@ -1,0 +1,59 @@
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="menu-btn d-md-none" (click)="toggleSidebar.emit()">
+      <lucide-icon name="menu"></lucide-icon>
+    </button>
+  </div>
+
+  <div class="topbar-right" *ngIf="currentUser$ | async as user">
+    <div class="notification-wrapper">
+      <button class="icon-btn" (click)="toggleNotificationMenu()">
+        <lucide-icon name="bell"></lucide-icon>
+        <span class="badge-count" *ngIf="(unreadCount$ | async) as count">{{ count > 99 ? '99+' : count }}</span>
+      </button>
+
+      <div class="dropdown-menu notification-menu" *ngIf="isNotificationMenuOpen">
+        <div class="dropdown-header">
+          <span>Notifications</span>
+          <button class="text-btn" (click)="markAllRead()">Mark all read</button>
+        </div>
+        <div class="dropdown-content">
+          <div class="notification-item" *ngFor="let notif of notifications" [class.unread]="!notif.isRead">
+            <p class="notif-title">{{ notif.title }}</p>
+            <p class="notif-message">{{ notif.message }}</p>
+          </div>
+          <div class="empty-state" *ngIf="notifications.length === 0">
+            <p>No new notifications</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-wrapper">
+      <button class="profile-btn" (click)="toggleProfileMenu()">
+        <div class="avatar">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</div>
+        <div class="user-info d-none d-sm-block">
+          <span class="name">{{ user.firstName }} {{ user.lastName }}</span>
+          <span class="role">{{ user.role }}</span>
+        </div>
+        <lucide-icon name="chevron-down" size="16"></lucide-icon>
+      </button>
+
+      <div class="dropdown-menu profile-menu" *ngIf="isProfileMenuOpen">
+        <a routerLink="/profile/edit" class="dropdown-item" (click)="isProfileMenuOpen = false">
+          <lucide-icon name="user" size="16"></lucide-icon>
+          Profile
+        </a>
+        <a routerLink="/settings" class="dropdown-item" (click)="isProfileMenuOpen = false">
+          <lucide-icon name="settings" size="16"></lucide-icon>
+          Settings
+        </a>
+        <div class="divider"></div>
+        <button class="dropdown-item text-danger" (click)="logout()">
+          <lucide-icon name="log-out" size="16"></lucide-icon>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

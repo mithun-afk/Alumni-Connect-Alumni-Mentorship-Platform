@@ -1,0 +1,42 @@
+<div class="admin-container">
+  <h1>Moderation Dashboard</h1>
+  <p class="subtitle">Review and manage mentorships, opportunities, and events</p>
+
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Submitted By</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="pendingItems.length === 0">
+          <td colspan="6" class="empty-state">No pending items to moderate.</td>
+        </tr>
+        <tr *ngFor="let item of pendingItems">
+          <td><span class="type-badge" [ngClass]="item.type">{{ item.type }}</span></td>
+          <td class="item-title">{{ item.title }}</td>
+          <td>{{ item.submittedBy }}</td>
+          <td>{{ item.date }}</td>
+          <td><span class="status-badge" [ngClass]="item.status">{{ item.status }}</span></td>
+          <td class="actions">
+            <button class="btn-icon approve" title="Approve" (click)="onModerate(item, 'approve')">
+              <lucide-icon name="check-circle"></lucide-icon>
+            </button>
+            <button class="btn-icon suspend" title="Suspend" (click)="onModerate(item, 'suspend')">
+              <lucide-icon name="x-circle"></lucide-icon>
+            </button>
+            <button class="btn-icon delete" title="Delete" (click)="onModerate(item, 'delete')">
+              <lucide-icon name="trash-2"></lucide-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@import '../../../../styles.scss';
+
+.py-4 { padding-top: $grid * 4; padding-bottom: $grid * 4; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-4 { margin-bottom: $grid * 4; }
+.mt-3 { margin-top: $grid * 3; }
+.ml-2 { margin-left: $grid; }
+.p-0 { padding: 0 !important; overflow: hidden; }
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.text-muted { color: lighten($text, 10%); }
+.font-medium { font-weight: 500; color: $navy; }
+
+.header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: $grid * 3; }
+
+.filters-card {
+  display: flex; gap: $grid * 3; align-items: center; padding: $grid * 2 $grid * 3;
+  @media (max-width: 600px) { flex-direction: column; align-items: stretch; }
+}
+
+.filter-group {
+  display: flex; align-items: center; gap: $grid; flex: 1;
+  input, select {
+    width: 100%; border: none; background: transparent; font-size: 0.875rem; color: $navy; outline: none;
+    padding: $grid * 0.5;
+  }
+}
+
+.btn-sm {
+  padding: $grid * 0.75 $grid * 1.5; font-size: 0.75rem;
+}

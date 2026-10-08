@@ -1,0 +1,45 @@
+<div class="career-path-container">
+  <h1>Career Path Explorer</h1>
+  <p class="subtitle">Visualize department-wise alumni timelines</p>
+
+  <div class="filter-section">
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()" class="filter-form">
+      <div class="form-group">
+        <label>Department</label>
+        <input type="text" formControlName="department" placeholder="e.g. Computer Science">
+      </div>
+      <div class="form-group">
+        <label>Graduation Year</label>
+        <input type="number" formControlName="graduationYear" placeholder="e.g. 2020">
+      </div>
+      <div class="form-group">
+        <label>Domain</label>
+        <input type="text" formControlName="domain" placeholder="e.g. AI, Web Dev">
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" formControlName="company" placeholder="e.g. Google">
+      </div>
+      <button type="submit" class="btn-primary">
+        <lucide-icon name="search" class="icon-small"></lucide-icon> Search
+      </button>
+    </form>
+  </div>
+
+  <div class="timeline-section">
+    <div *ngIf="careerNodes.length === 0" class="empty-state">
+      No career paths found. Try adjusting filters.
+    </div>
+
+    <div class="timeline" *ngIf="careerNodes.length > 0">
+      <div class="timeline-node" *ngFor="let node of careerNodes; let i = index">
+        <div class="timeline-year">{{ node.year }}</div>
+        <div class="timeline-content">
+          <h3>{{ node.name }} <span class="dept-badge">{{ node.department }} '{{ node.graduationYear }}</span></h3>
+          <p class="role">{{ node.role }} at <strong>{{ node.company }}</strong></p>
+          <p class="domain">{{ node.domain }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

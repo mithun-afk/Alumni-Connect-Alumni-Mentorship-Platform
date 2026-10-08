@@ -1,0 +1,12 @@
+$navy: #1F2A44; $accent: #2F7F79; $text: #5B6475; $border: #E2E4E8; $radius: 6px;
+.page { padding: 24px; }
+.requests-list { display: flex; flex-direction: column; gap: 16px; }
+.request-card { }
+.request-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.person-info { display: flex; gap: 12px; align-items: center; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: $accent; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1rem; flex-shrink: 0; }
+.dept { font-size: 0.8rem; color: $text; margin-top: 2px; }
+.request-message { color: $text; font-size: 0.875rem; margin: 8px 0; font-style: italic; }
+.request-date { font-size: 0.75rem; color: $text; margin-bottom: 12px; }
+.request-actions { display: flex; gap: 8px; }
+.match-score { font-size: 0.8rem; color: $text; margin-bottom: 8px; strong { color: $accent; } }

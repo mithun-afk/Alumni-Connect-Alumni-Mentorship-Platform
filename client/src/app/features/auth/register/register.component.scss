@@ -1,0 +1,118 @@
+@import '../../../../styles.scss';
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $grid * 3;
+  background: $surface;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 540px;
+  padding: $grid * 4 $grid * 5;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: $grid * 3;
+
+  .brand-title {
+    color: $accent;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: $grid * 2;
+  }
+
+  h2 {
+    color: $navy;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: $grid;
+  }
+
+  p {
+    color: $text;
+    font-size: 0.875rem;
+  }
+}
+
+.role-selector {
+  display: flex;
+  background: $surface;
+  padding: 4px;
+  border-radius: $radius;
+  margin-bottom: $grid * 3;
+
+  button {
+    flex: 1;
+    padding: $grid $grid * 2;
+    border: none;
+    background: transparent;
+    border-radius: $radius - 2px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: $text;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &.active {
+      background: $white;
+      color: $navy;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: $grid * 2;
+  
+  .half {
+    flex: 1;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.w-100 {
+  width: 100%;
+  justify-content: center;
+}
+
+.spinner-sm {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  border-top-color: $white;
+}
+
+.alert {
+  padding: $grid * 1.5;
+  border-radius: $radius;
+  margin-bottom: $grid * 3;
+  font-size: 0.875rem;
+  
+  &-error {
+    background: lighten($error, 40%);
+    color: $error;
+    border: 1px solid lighten($error, 20%);
+  }
+
+  &-info {
+    background: lighten($accent, 50%);
+    color: $accent;
+    border: 1px solid lighten($accent, 30%);
+  }
+}
+
+.auth-footer {
+  margin-top: $grid * 3;
+  text-align: center;
+  font-size: 0.875rem;
+}

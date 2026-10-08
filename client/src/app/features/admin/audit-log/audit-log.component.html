@@ -1,0 +1,50 @@
+<div class="container py-4">
+  <div class="header-flex">
+    <h1 class="page-title mb-0">System Audit Logs</h1>
+  </div>
+
+  <div class="filters-card card mb-4">
+    <div class="filter-group">
+      <lucide-icon name="filter" size="18" class="text-muted"></lucide-icon>
+      <select [(ngModel)]="filters.action" (ngModelChange)="onFilterChange()">
+        <option value="">All Actions</option>
+        <option value="APPROVE_ALUMNI">Approve Alumni</option>
+        <option value="REJECT_ALUMNI">Reject Alumni</option>
+        <option value="SUSPEND_USER">Suspend User</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p class="mt-3">Loading audit logs...</p>
+  </div>
+
+  <div class="card p-0" *ngIf="!isLoading">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Admin</th>
+            <th>Action</th>
+            <th>Target</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of logs">
+            <td class="text-muted font-mono text-sm">{{ log.timestamp | date:'short' }}</td>
+            <td class="font-medium">{{ log.adminName }}</td>
+            <td><span class="badge badge-surface">{{ log.action }}</span></td>
+            <td>{{ log.target }}</td>
+            <td class="text-muted text-sm">{{ log.details }}</td>
+          </tr>
+          <tr *ngIf="logs.length === 0">
+            <td colspan="5" class="text-center py-4">No audit logs found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

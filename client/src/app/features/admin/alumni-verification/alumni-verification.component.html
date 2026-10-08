@@ -1,0 +1,66 @@
+<div class="container py-4">
+  <div class="header-flex">
+    <h1 class="page-title mb-0">Alumni Verification Requests</h1>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-error">{{ errorMessage }}</div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p class="mt-3">Loading requests...</p>
+  </div>
+
+  <div *ngIf="!isLoading && pendingAlumni.length === 0" class="empty-state card">
+    <lucide-icon name="check-circle" size="48" class="text-success mb-3"></lucide-icon>
+    <h3>All Caught Up!</h3>
+    <p>There are no pending alumni requests to review at this time.</p>
+  </div>
+
+  <div class="card p-0" *ngIf="!isLoading && pendingAlumni.length > 0">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Batch</th>
+            <th>Roll No</th>
+            <th>Requested At</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let user of pendingAlumni">
+            <tr>
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.department || 'N/A' }}</td>
+              <td>{{ user.batch || 'N/A' }}</td>
+              <td>{{ user.rollNo || 'N/A' }}</td>
+              <td>{{ user.createdAt | date:'shortDate' }}</td>
+              <td class="text-right">
+                <div class="actions" *ngIf="rejectingId !== user._id">
+                  <button class="btn btn-sm btn-success" (click)="approve(user._id)" [disabled]="isProcessing">Approve</button>
+                  <button class="btn btn-sm btn-danger ml-2" (click)="startReject(user._id)" [disabled]="isProcessing">Reject</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="rejectingId === user._id" class="reject-row">
+              <td colspan="7">
+                <div class="reject-form">
+                  <input type="text" [(ngModel)]="rejectReason" placeholder="Reason for rejection (required)" class="form-control">
+                  <div class="reject-actions">
+                    <button class="btn btn-sm btn-secondary" (click)="cancelReject()">Cancel</button>
+                    <button class="btn btn-sm btn-danger ml-2" (click)="confirmReject(user._id)" [disabled]="isProcessing">Confirm Reject</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

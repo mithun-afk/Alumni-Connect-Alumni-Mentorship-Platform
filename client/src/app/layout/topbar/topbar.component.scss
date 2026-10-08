@@ -1,0 +1,215 @@
+@import '../../../styles.scss';
+
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 260px;
+  height: 64px;
+  background: $white;
+  border-bottom: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $grid * 3;
+  z-index: 900;
+  transition: left 0.3s ease;
+
+  @media (max-width: 767px) {
+    left: 0;
+  }
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: $grid * 2;
+
+  .menu-btn {
+    background: none;
+    border: none;
+    color: $text;
+    cursor: pointer;
+    padding: $grid;
+    margin-left: -$grid;
+  }
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: $grid * 2;
+}
+
+.icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: $text;
+  cursor: pointer;
+  padding: $grid;
+  border-radius: 50%;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $surface;
+    color: $navy;
+  }
+
+  .badge-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: $error;
+    color: $white;
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 10px;
+    line-height: 1;
+  }
+}
+
+.profile-wrapper, .notification-wrapper {
+  position: relative;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: $grid * 1.5;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $grid * 0.5;
+  border-radius: $radius;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $surface;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: $accent;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .user-info {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: $navy;
+      line-height: 1.2;
+    }
+
+    .role {
+      font-size: 0.75rem;
+      color: $text;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: $grid;
+  background: $white;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  min-width: 200px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.notification-menu {
+  width: 320px;
+  
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $grid * 1.5 $grid * 2;
+    border-bottom: 1px solid $border;
+    font-weight: 600;
+    font-size: 0.875rem;
+
+    .text-btn {
+      background: none; border: none;
+      color: $accent; font-size: 0.75rem; cursor: pointer;
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  .dropdown-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .notification-item {
+    padding: $grid * 1.5 $grid * 2;
+    border-bottom: 1px solid $border;
+    font-size: 0.8125rem;
+    
+    &.unread {
+      background: rgba($accent, 0.05);
+    }
+    
+    .notif-title { font-weight: 600; color: $navy; margin-bottom: 4px; }
+    .notif-message { color: $text; line-height: 1.4; }
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: $grid * 1.5;
+  padding: $grid * 1.25 $grid * 2;
+  color: $text;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $surface;
+    color: $navy;
+  }
+
+  &.text-danger {
+    color: $error;
+    &:hover { background: rgba($error, 0.05); }
+  }
+}
+
+.divider {
+  height: 1px;
+  background: $border;
+  margin: $grid * 0.5 0;
+}
+
+.d-none { display: none; }
+@media (min-width: 576px) {
+  .d-sm-block { display: block; }
+}
+@media (max-width: 767px) {
+  .d-md-none { display: block !important; }
+}

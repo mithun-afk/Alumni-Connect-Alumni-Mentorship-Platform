@@ -1,0 +1,30 @@
+<aside class="sidebar" [class.open]="isOpen">
+  <div class="sidebar-header">
+    <div class="logo">
+      <lucide-icon name="award" class="logo-icon"></lucide-icon>
+      <span>Alumni Network</span>
+    </div>
+    <button class="close-btn d-md-none" (click)="closeSidebar.emit()">
+      <lucide-icon name="x"></lucide-icon>
+    </button>
+  </div>
+
+  <div class="sidebar-content" *ngIf="currentUser$ | async as user">
+    <div *ngIf="user.role === 'alumni' && user.alumniStatus === 'pending'" class="pending-notice">
+      <lucide-icon name="alert-circle" size="16"></lucide-icon>
+      <p>Account pending verification.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a *ngFor="let item of getMenuItems(user.role)"
+         [routerLink]="item.path"
+         routerLinkActive="active"
+         class="nav-item"
+         (click)="closeSidebar.emit()">
+        <lucide-icon [name]="item.icon" size="20"></lucide-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    </nav>
+  </div>
+</aside>
+<div class="sidebar-overlay" *ngIf="isOpen" (click)="closeSidebar.emit()"></div>

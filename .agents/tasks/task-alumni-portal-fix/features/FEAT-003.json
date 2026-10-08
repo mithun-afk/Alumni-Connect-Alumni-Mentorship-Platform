@@ -1,0 +1,37 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Replace ComingSoonComponent stubs for Events, Opportunities, and Messages with real Angular components that connect to the already-working backend routes. Each feature follows the same pattern: create a service in core/services, create a list component in the feature folder, update the routes file. Also add missing .gitignore for server. Independent of FEAT-002 (can be done in parallel conceptually) but depends on FEAT-001 for the backend to be accessible.",
+  "status": "pending",
+  "steps": [
+    "Read server/src/controllers/eventController.js (already read) and server/src/routes/eventRoutes.js to confirm API shape: GET /api/events returns {success, data: [{_id, title, description, type, date, startTime, endTime, location, isVirtual, meetingLink, maxAttendees, attendees[], createdBy}]}. POST /api/events/:id/rsvp returns {success, data: event}.",
+    "Create client/src/app/core/services/event.service.ts: getEvents(filters?): Observable<any> calls GET /api/events; rsvpEvent(id: string): Observable<any> calls POST /api/events/:id/rsvp with empty body.",
+    "Create client/src/app/features/events/events-list/events-list.component.ts: inject EventService; properties: events=[], loading=true, error=false, rsvpingId: string|null=null, rsvpedIds: Set<string>=new Set(); ngOnInit calls loadEvents(); loadEvents() subscribes with next/error pattern; rsvpEvent(id) calls service, adds id to rsvpedIds on success, handles already-rsvp'd error gracefully.",
+    "Create client/src/app/features/events/events-list/events-list.component.html: loading spinner, error state, empty state ('No upcoming events'), event cards showing title, date (date pipe), type badge, location, attendee count, RSVP button (disabled if rsvpingId===event._id or rsvpedIds.has(event._id), shows 'RSVPed' text when done).",
+    "Create client/src/app/features/events/events-list/events-list.component.scss: minimal scoped styles matching the existing card patterns in the codebase (see mentors-list.component.scss for reference).",
+    "Update client/src/app/features/events/events.routes.ts: import EventsListComponent; replace ComingSoonComponent route with { path: '', component: EventsListComponent }.",
+    "Read server/src/controllers/opportunityController.js (already read) to confirm API shape: GET /api/opportunities returns {success, data: [{_id, title, company, type, description, requirements, location, isRemote, applicationDeadline, applicationLink, status, postedBy}]}. POST /api/opportunities/:id/apply returns {success, data: opportunity}.",
+    "Create client/src/app/core/services/opportunity.service.ts: getOpportunities(filters?): Observable<any> calls GET /api/opportunities with optional type/company query params; applyOpportunity(id: string): Observable<any> calls POST /api/opportunities/:id/apply with empty body.",
+    "Create client/src/app/features/opportunities/opportunities-list/opportunities-list.component.ts: inject OpportunityService; properties: opportunities=[], loading=true, error=false, applyingId: string|null=null, appliedIds: Set<string>=new Set(); ngOnInit loads opportunities; applyOpportunity(id) calls service, handles 'Already applied' error by adding to appliedIds.",
+    "Create client/src/app/features/opportunities/opportunities-list/opportunities-list.component.html: loading, error, empty states; opportunity cards showing title, company, type badge (job/internship/project/research), description (truncated to 150 chars), deadline (if present), remote badge; Apply button (disabled if applying or already applied).",
+    "Create client/src/app/features/opportunities/opportunities-list/opportunities-list.component.scss: card layout consistent with events-list styling.",
+    "Update client/src/app/features/opportunities/opportunities.routes.ts: import OpportunitiesListComponent; replace ComingSoonComponent with { path: '', component: OpportunitiesListComponent }.",
+    "Read server/src/controllers/messageController.js to understand message API shape, then create client/src/app/core/services/message.service.ts with getConversations() and getMessages(userId) methods. Create client/src/app/features/messages/messages-list/messages-list.component.ts with a simple conversations list (loading, empty, error states). Update client/src/app/features/messages/messages.routes.ts to use the new component.",
+    "Create server/.gitignore (if not present) with: node_modules/, .env, dist/, *.log. Verify client/.gitignore already excludes node_modules (it does by default with Angular CLI)."
+  ],
+  "acceptance_criteria": [
+    "Navigate to /events — EventsListComponent renders (not ComingSoonComponent), shows loading then event list or empty state",
+    "RSVP button on an event calls POST /api/events/:id/rsvp, shows success state (button text changes to 'RSVPed')",
+    "Navigate to /opportunities — OpportunitiesListComponent renders, shows loading then opportunity list or empty state",
+    "Apply button on an opportunity calls POST /api/opportunities/:id/apply, shows applied state",
+    "Navigate to /messages — MessagesListComponent renders, shows loading then conversation list or empty state (no ComingSoonComponent)",
+    "server/.gitignore exists and contains .env",
+    "cd client && npm run build completes with 0 errors"
+  ],
+  "verification": [
+    "cd 'e:\\da\\Alumini proj\\client' && npm run build -- 0 compile errors after all component additions",
+    "Manual: navigate to /events, /opportunities, /messages in the running app — verify real components load with API data or empty state (not 'Coming Soon')"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

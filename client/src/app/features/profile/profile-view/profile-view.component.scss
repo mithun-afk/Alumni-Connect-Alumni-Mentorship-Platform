@@ -1,0 +1,100 @@
+@import '../../../../styles.scss';
+
+.py-4 { padding-top: $grid * 4; padding-bottom: $grid * 4; }
+.mb-4 { margin-bottom: $grid * 4; }
+.mb-3 { margin-bottom: $grid * 3; }
+.mt-3 { margin-top: $grid * 3; }
+.text-muted { color: lighten($text, 15%); }
+
+.profile-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: $grid * 4;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: $grid * 3;
+  }
+
+  .header-content {
+    display: flex;
+    gap: $grid * 3;
+    align-items: center;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .avatar-large {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: $navy; color: $white;
+    font-size: 2.5rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .user-info {
+    h1 { font-size: 1.75rem; color: $navy; margin-bottom: 4px; }
+    .headline { font-size: 1.125rem; color: $text; margin-bottom: $grid * 1.5; }
+    
+    .meta-info {
+      display: flex; flex-wrap: wrap; gap: $grid * 1.5; align-items: center;
+      span { display: flex; align-items: center; gap: 4px; font-size: 0.8125rem; color: $text; }
+    }
+  }
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $grid * 3;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-card {
+  margin-bottom: $grid * 3;
+  
+  h3 {
+    font-size: 1.125rem; color: $navy; margin-bottom: $grid * 2;
+    padding-bottom: $grid; border-bottom: 1px solid $border;
+  }
+}
+
+.bio-text { line-height: 1.6; color: $text; white-space: pre-wrap; }
+
+.experience-item {
+  display: flex; gap: $grid * 2; align-items: flex-start;
+  .exp-icon {
+    width: 40px; height: 40px; border-radius: $radius;
+    background: rgba($accent, 0.1); color: $accent;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exp-details {
+    h4 { font-size: 1rem; color: $navy; margin-bottom: 2px; }
+    .company { font-weight: 500; color: $text; margin-bottom: 2px; }
+    .duration { font-size: 0.8125rem; color: lighten($text, 10%); }
+  }
+}
+
+.tags-list {
+  display: flex; flex-wrap: wrap; gap: $grid;
+}
+
+.badge-surface {
+  background: $surface; color: $navy; border: 1px solid $border;
+  padding: 4px $grid * 1.5; font-size: 0.8125rem; font-weight: 500;
+}
+
+.links-list {
+  display: flex; flex-direction: column; gap: $grid * 1.5;
+  .link-item {
+    display: flex; align-items: center; gap: $grid;
+    color: $text; font-size: 0.875rem;
+    &:hover { color: $accent; }
+  }
+}

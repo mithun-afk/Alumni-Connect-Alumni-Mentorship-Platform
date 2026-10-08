@@ -1,0 +1,123 @@
+@import '../../../styles.scss';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+  background: $white;
+  border-right: 1px solid $border;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+
+  &-header {
+    height: 64px;
+    padding: 0 $grid * 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $border;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: $grid;
+      color: $navy;
+      font-weight: 700;
+      font-size: 1.125rem;
+
+      .logo-icon {
+        color: $accent;
+      }
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: $text;
+      cursor: pointer;
+    }
+  }
+
+  &-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $grid * 2 0;
+  }
+
+  .pending-notice {
+    margin: 0 $grid * 2 $grid * 2;
+    padding: $grid * 1.5;
+    background: lighten($warning, 40%);
+    color: darken($warning, 15%);
+    border-radius: $radius;
+    display: flex;
+    gap: $grid;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    gap: $grid * 0.5;
+    padding: 0 $grid * 2;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: $grid * 1.5;
+    padding: $grid * 1.5 $grid * 2;
+    color: $text;
+    border-radius: $radius;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+
+    &:hover {
+      background: $surface;
+      color: $navy;
+    }
+
+    &.active {
+      background: rgba($accent, 0.05);
+      color: $accent;
+      border-left-color: $accent;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+    }
+  }
+  .sidebar-overlay {
+    display: block;
+  }
+  .d-md-none {
+    display: block !important;
+  }
+}
+@media (min-width: 768px) {
+  .d-md-none {
+    display: none !important;
+  }
+}

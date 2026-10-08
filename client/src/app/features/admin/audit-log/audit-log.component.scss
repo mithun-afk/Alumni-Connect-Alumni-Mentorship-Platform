@@ -1,0 +1,31 @@
+@import '../../../../styles.scss';
+
+.py-4 { padding-top: $grid * 4; padding-bottom: $grid * 4; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-4 { margin-bottom: $grid * 4; }
+.mt-3 { margin-top: $grid * 3; }
+.p-0 { padding: 0 !important; overflow: hidden; }
+
+.text-center { text-align: center; }
+.text-muted { color: lighten($text, 10%); }
+.font-medium { font-weight: 500; color: $navy; }
+.font-mono { font-family: monospace; }
+.text-sm { font-size: 0.8125rem; }
+
+.header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: $grid * 3; }
+
+.filters-card {
+  display: flex; gap: $grid * 3; align-items: center; padding: $grid * 2 $grid * 3;
+}
+
+.filter-group {
+  display: flex; align-items: center; gap: $grid;
+  select {
+    border: none; background: transparent; font-size: 0.875rem; color: $navy; outline: none;
+    padding: $grid * 0.5; min-width: 200px;
+  }
+}
+
+.badge-surface {
+  background: $surface; color: $navy; border: 1px solid $border;
+}

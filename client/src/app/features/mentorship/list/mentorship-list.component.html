@@ -1,0 +1,24 @@
+<div class="list-container">
+  <h2>My Mentorships</h2>
+
+  <div *ngIf="loading" class="state-message">Loading...</div>
+  <div *ngIf="error" class="state-message error-message">Failed to load mentorships. Please try again.</div>
+  <div *ngIf="!loading && !error && mentorships.length === 0" class="state-message">No active mentorships found.</div>
+
+  <div class="grid" *ngIf="!loading && !error && mentorships.length > 0">
+    <div class="card" *ngFor="let m of mentorships" [routerLink]="['/mentorships/journey', m.id]">
+      <div class="header">
+        <h3>{{ (m.mentor?.firstName || '') + ' ' + (m.mentor?.lastName || '') }} &amp; {{ (m.student?.firstName || '') + ' ' + (m.student?.lastName || '') }}</h3>
+        <span class="status">{{ m.status }}</span>
+      </div>
+      <p>Started: {{ m.startDate | date }}</p>
+      <div class="goals">
+        <strong>Goals:</strong>
+        <ul>
+          <li *ngFor="let g of m.goals">{{ g }}</li>
+        </ul>
+      </div>
+      <button class="btn-primary">View Journey</button>
+    </div>
+  </div>
+</div>

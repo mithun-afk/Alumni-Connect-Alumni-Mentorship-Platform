@@ -1,0 +1,12 @@
+.list-container { padding: 24px; font-family: 'Inter', sans-serif; h2 { color: #001f3f; } }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 16px; }
+.card {
+  background: white; padding: 16px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer;
+  transition: transform 0.2s;
+  &:hover { transform: translateY(-2px); }
+  .header { display: flex; justify-content: space-between; align-items: center; h3 { margin: 0; color: #001f3f; } }
+  .status { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+  .goals { margin: 12px 0; ul { padding-left: 20px; margin: 4px 0; font-size: 14px; color: #444; } }
+}
+.btn-primary { background: #008080; color: white; border: none; padding: 8px 16px; border-radius: 6px; width: 100%; cursor: pointer; }
+.state-message { padding: 24px; text-align: center; color: #666; }
